@@ -1,0 +1,31 @@
+{
+  "name": "api-locker",
+  "version": "1.0.0",
+  "description": "practice making a rest API",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "lint": "standard --verbose | snazzy",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/m4v15/restful-API.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/m4v15/restful-API/issues"
+  },
+  "homepage": "https://github.com/m4v15/restful-API#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "mongoose": "^4.11.6"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0",
+    "standard": "^10.0.3"
+  }
+}
