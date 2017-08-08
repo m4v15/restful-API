@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/m4v15/restful-API#readme",
   "dependencies": {
+    "body-parser": "^1.17.2",
     "express": "^4.15.4",
     "mongoose": "^4.11.6"
   },
