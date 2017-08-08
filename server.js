@@ -11,3 +11,11 @@ const router = express.Router()
 router.get('/', (req, res) => {
   res.json({ msg: 'NO BEER!' })
 })
+
+//register routes on app at /api
+
+app.use('/api', router)
+
+app.listen(port)
+
+console.log('Server listening on port ', port)
