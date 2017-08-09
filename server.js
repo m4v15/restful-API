@@ -7,8 +7,8 @@ const Beer = require('./models/beer')
 
 // Configure App
 const app = express()
-app.use(bodyParser.urlencoded({extender: true}))
-app.use(bodyParser.json({extender: true}))
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.json({extended: true}))
 
 
 const port = process.env.PORT || 4444
