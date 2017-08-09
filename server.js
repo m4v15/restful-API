@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const beerControllers = require('./controllers/beer')
+const userControllers = require('./controllers/user')
 
 // Configure App
 const app = express()
@@ -20,6 +21,11 @@ router.route('/beers/:beer_id')
       .get(beerControllers.getOne)
       .put(beerControllers.update)
       .delete(beerControllers.remove)
+// Users
+router.route('/users')
+      .get(userControllers.getAll)
+      .post(userControllers.add)
+
 // register routes on app at /api
 app.use('/api', router)
 
