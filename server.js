@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const passport = require('passport')
+const ejs = require('ejs')
 const beerControllers = require('./controllers/beer')
 const userControllers = require('./controllers/user')
 const authControllers = require('./controllers/auth')
@@ -12,6 +13,9 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json({extended: true}))
 const port = process.env.PORT || 4444
 app.use(passport.initialize())
+
+// view
+app.set('view engine', 'ejs')
 
 // Router
 const router = express.Router()
