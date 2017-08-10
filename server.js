@@ -5,7 +5,7 @@ const passport = require('passport')
 const beerControllers = require('./controllers/beer')
 const userControllers = require('./controllers/user')
 const authControllers = require('./controllers/auth')
-
+const clientControllers = require('./controllers/client')
 // Configure App
 const app = express()
 app.use(bodyParser.urlencoded({extended: true}))
@@ -28,7 +28,10 @@ router.route('/beers/:beer_id')
 router.route('/users')
       .get(authControllers.isAuthenticated, userControllers.getAll)
       .post(userControllers.add)
-
+// Clients
+router.route('/clients')
+      .get(authControllers.isAuthenticated, clientControllers.getClients)
+      .post(authControllers.isAuthenticated, clientControllers.postClients)
 // register routes on app at /api
 app.use('/api', router)
 
