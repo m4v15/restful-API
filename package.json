@@ -20,9 +20,12 @@
   },
   "homepage": "https://github.com/m4v15/restful-API#readme",
   "dependencies": {
+    "bcrypt": "^1.0.2",
     "body-parser": "^1.17.2",
     "express": "^4.15.4",
-    "mongoose": "^4.11.6"
+    "mongoose": "^4.11.6",
+    "passport": "^0.3.2",
+    "passport-http": "^0.3.0"
   },
   "devDependencies": {
     "nodemon": "^1.11.0",
