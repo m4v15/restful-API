@@ -9,6 +9,7 @@ beerControllers.add = (req, res) => {
   beer.name = req.body.name
   beer.type = req.body.type
   beer.quantity = req.body.quantity
+  beer.userId = req.user._id
 
   beer.save()
   .then(savedBeer => {
@@ -18,30 +19,28 @@ beerControllers.add = (req, res) => {
 }
 
 beerControllers.getAll = (req, res) => {
-  Beer.find({})
+  Beer.find({ userId: req.user._id })
   .then(beers => res.json(beers))
   .catch(err => res.send(err))
 }
 
 beerControllers.getOne = (req, res) => {
-  Beer.findById(req.params.beer_id)
+  Beer.find({ userId: req.user._id, _id: req.params.beer_id })
   .then(beer => res.json(beer))
   .catch(err => res.send(err))
 }
 
 beerControllers.update = (req, res) => {
-  Beer.findById(req.params.beer_id)
-  .then(beer => {
-    beer.quantity = req.body.quantity
-    beer.save()
-    .then(beer => res.json(beer))
-    .catch(err => res.send(err))
+  Beer.update({ userId: req.user._id, _id: req.params.beer_id }, { quantity: req.body.quantity })
+  .then(num => {
+    console.log(num)
+    res.json({ msg: 'updated' })
   })
   .catch(err => res.send(err))
 }
 
 beerControllers.remove = (req, res) => {
-  Beer.findByIdAndRemove(req.params.beer_id)
+  Beer.remove({ userId: req.user._id, _id: req.params.beer_id })
   .then(() => res.json({ msg: 'Beer removed' }))
   .catch(err => res.send(err))
 }

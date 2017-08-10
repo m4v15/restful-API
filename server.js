@@ -1,29 +1,32 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+const passport = require('passport')
 const beerControllers = require('./controllers/beer')
 const userControllers = require('./controllers/user')
+const authControllers = require('./controllers/auth')
 
 // Configure App
 const app = express()
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json({extended: true}))
 const port = process.env.PORT || 4444
+app.use(passport.initialize())
 
 // Router
 const router = express.Router()
 // All beers route
 router.route('/beers')
-      .post(beerControllers.add)
-      .get(beerControllers.getAll)
+      .post(authControllers.isAuthenticated, beerControllers.add)
+      .get(authControllers.isAuthenticated, beerControllers.getAll)
 // Single beers
 router.route('/beers/:beer_id')
-      .get(beerControllers.getOne)
-      .put(beerControllers.update)
-      .delete(beerControllers.remove)
+      .get(authControllers.isAuthenticated, beerControllers.getOne)
+      .put(authControllers.isAuthenticated, beerControllers.update)
+      .delete(authControllers.isAuthenticated, beerControllers.remove)
 // Users
 router.route('/users')
-      .get(userControllers.getAll)
+      .get(authControllers.isAuthenticated, userControllers.getAll)
       .post(userControllers.add)
 
 // register routes on app at /api

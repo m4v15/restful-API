@@ -34,4 +34,10 @@ const updatePwHasher = function (next) {
 
 UserSchema.pre('save', updatePwHasher)
 
+UserSchema.methods.verifyPassword = function (pw, cb) {
+  bcrypt.compare(pw, this.password)
+  .then(correct => cb(null, correct))
+  .catch(err => cb(err))
+}
+
 module.exports = mongoose.model('User', UserSchema)
