@@ -1,7 +1,10 @@
 const passport = require('passport')
 const BasicStrategy = require('passport-http').BasicStrategy
+const BearerStrategy = require('passport-http-bearer').Strategy
+
 const User = require('../models/user')
 const Client = require('../models/client')
+const Token = require('../models/token')
 
 const Authenticate = module.exports = {}
 
@@ -34,6 +37,22 @@ passport.use('client-basic', new BasicStrategy(
     .then(client => {
       if (!client || client.secret !== pw) return cb(null, false)
       return (null, client)
+    })
+    .catch(cb)
+  }
+))
+
+passport.use(new BearerStrategy(
+  (accessToken, cb) => {
+    Token.findOne({ value: accessToken })
+    .then(token => {
+      if (!token) return cb(null, false)
+      User.findOne({ _id: token.userId })
+      .then(user => {
+        if (!user) return cb(null, false)
+        cb(null, user, { scope: '*' })
+      })
+      .catch(cb)
     })
     .catch(cb)
   }
