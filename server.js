@@ -3,10 +3,12 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const passport = require('passport')
 const ejs = require('ejs')
+const session = require('express-session')
 const beerControllers = require('./controllers/beer')
 const userControllers = require('./controllers/user')
 const authControllers = require('./controllers/auth')
 const clientControllers = require('./controllers/client')
+const oauth2Controller = require('./controllers/oauth2')
 // Configure App
 const app = express()
 app.use(bodyParser.urlencoded({extended: true}))
@@ -16,6 +18,13 @@ app.use(passport.initialize())
 
 // view
 app.set('view engine', 'ejs')
+
+// sessions
+app.use(session({
+  secret:'Secret Session Key',
+  saveUninitialized: true,
+  resave: true
+}))
 
 // Router
 const router = express.Router()
@@ -36,6 +45,12 @@ router.route('/users')
 router.route('/clients')
       .get(authControllers.isAuthenticated, clientControllers.getClients)
       .post(authControllers.isAuthenticated, clientControllers.postClients)
+// Oauth2 endpoints
+router.route('/oauth2/authorize')
+      .get(authControllers.isAuthenticated, oauth2Controller.authorization)
+      .post(authControllers.isAuthenticated, oauth2Controller.decision)
+router.route('/oauth2/token')
+      .post(authControllers.isClientAuthenticated, oauth2Controller.token)
 // register routes on app at /api
 app.use('/api', router)
 

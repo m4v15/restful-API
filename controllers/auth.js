@@ -36,7 +36,7 @@ passport.use('client-basic', new BasicStrategy(
     Client.findOne({ id: username })
     .then(client => {
       if (!client || client.secret !== pw) return cb(null, false)
-      return (null, client)
+      return cb(null, client)
     })
     .catch(cb)
   }
@@ -58,5 +58,5 @@ passport.use(new BearerStrategy(
   }
 ))
 
-Authenticate.isAuthenticated = passport.authenticate('basic', { session: false })
-Authenticate.isCientAuthenticated = passport.authenticate('client-basic', { session: false })
+Authenticate.isAuthenticated = passport.authenticate(['basic', 'bearer'], { session: false })
+Authenticate.isClientAuthenticated = passport.authenticate('client-basic', { session: false })
